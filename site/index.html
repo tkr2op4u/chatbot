@@ -4,23 +4,23 @@
 <title>Chatbot</title>
 <style>
 body { 
-	color: black; font-weight: bold; font-size: 18px; background: green; background-repeat: repeat-y; 
+	color: black; font-weight: bold; font-size: 18px; font-family: "Comic Sans MS", cursive;
 }
 span { 
-	color: white; 
+	color: black; 
 } 
 ::-webkit-input-placeholder { 
-	color: white 
+	color: black; 
 }
 #main { 
-	position: fixed; top: 70%; right: 250px; width: 500px; 
+	top: 10%; right: 250px; width: 500px; 
 	border: 0px solid #421; padding: 40px; 
 }
 #main div { 
 	margin: 10px; 
 } 
 #input { 
-	border: 0; background: green; padding: 5px; border: 1px solid #421; 
+	border: 0; background: white; padding: 5px; border: 1px solid #421; 
 }
 </style>
 </head>
@@ -45,6 +45,7 @@ document.querySelector("#input").addEventListener("keypress", function(e){
 	if(key === 13){
 		var input = document.getElementById("input").value;
 		document.getElementById("user").innerHTML = input;
+      	main.scrollTop = main.scrollHeight
 		op(input);
 	}
 });
@@ -53,17 +54,17 @@ function op(input){
 		var product = input + "=" + eval(input);
 	} catch(e){
 		var text = (input.toLowerCase()).replace(/[^\w\s\d]/gi, "");
-		if(comp(trigger, reply, text)){
-			var product = comp(trigger, reply, text);
+		if(compare(trigger, reply, text)){
+			var product = compare(trigger, reply, text);
 		} else {
 			var product = alt[Math.floor(Math.random()*alt.length)];
 		}
 	}
 	document.getElementById("bot").innerHTML = product;
-	reply(product);
+	speak(product);
 	document.getElementById("input").value = "";
 }
-function comp(arr, array, string){
+function compare(arr, array, string){
 	var item;
 	for(var x=0; x<arr.length; x++){
 		for(var y=0; y<array.length; y++){
@@ -75,7 +76,7 @@ function comp(arr, array, string){
 	}
 	return item;
 }
-function reply(string){
+function speak(string){
 	var utterance = new SpeechSynthesisUtterance();
 	utterance.voice = speechSynthesis.getVoices().filter(function(voice){return voice.name == "John";})[0];
 	utterance.text = string;
@@ -83,7 +84,7 @@ function reply(string){
 	utterance.volume = 1;
 	utterance.rate = 1;
 	utterance.pitch = 2;
-	speechSynthesis.reply(utterance);
+	speechSynthesis.speak(utterance);
 }
 </script>
 </body>
