@@ -4,45 +4,45 @@
 <title>Chatbot</title>
 <style>
 body { 
-	color: white; font-weight: bold; font-size: 18px; background: black; background-repeat: repeat-y; 
+	color: black; font-weight: bold; font-size: 18px; background: green; background-repeat: repeat-y; 
 }
 span { 
-	color: blue; 
+	color: white; 
 } 
 ::-webkit-input-placeholder { 
-	color: blue 
+	color: white 
 }
 #main { 
-	position: fixed; top: 40%; right: 60px; width: 400px; 
+	position: fixed; top: 70%; right: 250px; width: 500px; 
 	border: 0px solid #421; padding: 40px; 
 }
 #main div { 
 	margin: 10px; 
 } 
 #input { 
-	border: 0; background: #EBE547; padding: 5px; border: 1px solid #421; 
+	border: 0; background: green; padding: 5px; border: 1px solid #421; 
 }
 </style>
 </head>
 <body>
 <div id="main">
 	<div>user: <span id="user"></span></div>
-	<div>chatbot: <span id="chatbot"></span></div>
-	<div><input id="input" type="text" placeholder="type your message here..." autocomplete="off"/></div>
+	<div>bot: <span id="bot"></span></div>
+	<div><input id="input" type="text" placeholder="type here..." autocomplete="off"/></div>
 </div>
 <script type="text/javascript">
 var trigger = [
-	["hi","hey","hello"],
-	["thanks!"]
+	["hi","hey","hello"], 
+	["thanks"]
 ];
 var reply = [
-	["Hi, how may I help you?"], 
-	["My pleasure!"]
+	["Hello, how may I help you?"], 
+	["Pleasure helping you!"]
 ];
-var alternative = ["Haha...", "Eh..."];
+var alternative = ["Please enter something valid..."];
 document.querySelector("#input").addEventListener("keypress", function(e){
 	var key = e.which || e.keyCode;
-	if(key === 13){ 
+	if(key === 13){
 		var input = document.getElementById("input").value;
 		document.getElementById("user").innerHTML = input;
 		output(input);
@@ -53,16 +53,15 @@ function output(input){
 		var product = input + "=" + eval(input);
 	} catch(e){
 		var text = (input.toLowerCase()).replace(/[^\w\s\d]/gi, "");
-		text = text.replace(/ a /g, " ").replace(/i feel /g, "").replace(/whats/g, "what is").replace(/please /g, "").replace(/ please/g, "");
 		if(compare(trigger, reply, text)){
 			var product = compare(trigger, reply, text);
 		} else {
 			var product = alternative[Math.floor(Math.random()*alternative.length)];
 		}
 	}
-	document.getElementById("chatbot").innerHTML = product;
+	document.getElementById("bot").innerHTML = product;
 	speak(product);
-	document.getElementById("input").value = ""; 
+	document.getElementById("input").value = "";
 }
 function compare(arr, array, string){
 	var item;
@@ -76,5 +75,16 @@ function compare(arr, array, string){
 	}
 	return item;
 }
+function speak(string){
+	var utterance = new SpeechSynthesisUtterance();
+	utterance.voice = speechSynthesis.getVoices().filter(function(voice){return voice.name == "John";})[0];
+	utterance.text = string;
+	utterance.lang = "en-US";
+	utterance.volume = 1;
+	utterance.rate = 1;
+	utterance.pitch = 2;
+	speechSynthesis.speak(utterance);
+}
 </script>
 </body>
+</html>

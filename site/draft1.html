@@ -1,16 +1,18 @@
+
 <!DOCTYPE html>
 <html>
 <head>
 <title>Chatbot</title>
 <style>
 body { 
-	color: white; font-weight: bold; font-size: 18px; background: black; background-repeat: repeat-y; 
+	color: #421; font-weight: bold; font-size: 18px; background: #EE4; 
+	background-image: url("girl.png"); background-repeat: repeat-y; 
 }
 span { 
-	color: blue; 
+	color: #711; 
 } 
 ::-webkit-input-placeholder { 
-	color: blue 
+	color: #711 
 }
 #main { 
 	position: fixed; top: 40%; right: 60px; width: 400px; 
@@ -28,21 +30,43 @@ span {
 <div id="main">
 	<div>user: <span id="user"></span></div>
 	<div>chatbot: <span id="chatbot"></span></div>
-	<div><input id="input" type="text" placeholder="type your message here..." autocomplete="off"/></div>
+	<div><input id="input" type="text" placeholder="say anything..." autocomplete="off"/></div>
 </div>
 <script type="text/javascript">
 var trigger = [
-	["hi","hey","hello"],
-	["thanks!"]
+	["hi","hey","hello"], 
+	["how are you", "how is life", "how are things"],
+	["what are you doing", "what is going on"],
+	["how old are you"],
+	["who are you", "are you human", "are you bot", "are you human or bot"],
+	["who created you", "who made you"],
+	["your name please",  "your name", "may i know your name", "what is your name"],
+	["i love you"],
+	["happy", "good"],
+	["bad", "bored", "tired"],
+	["help me", "tell me story", "tell me joke"],
+	["ah", "yes", "ok", "okay", "nice", "thanks", "thank you"],
+	["bye", "good bye", "goodbye", "see you later"]
 ];
 var reply = [
-	["Hi, how may I help you?"], 
-	["My pleasure!"]
+	["Hi","Hey","Hello"], 
+	["Fine", "Pretty well", "Fantastic"],
+	["Nothing much", "About to go to sleep", "Can you guest?", "I don't know actually"],
+	["I am 1 day old"],
+	["I am just a bot", "I am a bot. What are you?"],
+	["Kani Veri", "My God"],
+	["I am nameless", "I don't have a name"],
+	["I love you too", "Me too"],
+	["Have you ever felt bad?", "Glad to hear it"],
+	["Why?", "Why? You shouldn't!", "Try watching TV"],
+	["I will", "What about?"],
+	["Tell me a story", "Tell me a joke", "Tell me about yourself", "You are welcome"],
+	["Bye", "Goodbye", "See you later"]
 ];
 var alternative = ["Haha...", "Eh..."];
 document.querySelector("#input").addEventListener("keypress", function(e){
 	var key = e.which || e.keyCode;
-	if(key === 13){ 
+	if(key === 13){ //Enter button
 		var input = document.getElementById("input").value;
 		document.getElementById("user").innerHTML = input;
 		output(input);
@@ -52,7 +76,7 @@ function output(input){
 	try{
 		var product = input + "=" + eval(input);
 	} catch(e){
-		var text = (input.toLowerCase()).replace(/[^\w\s\d]/gi, "");
+		var text = (input.toLowerCase()).replace(/[^\w\s\d]/gi, ""); //remove all chars except words, space and 
 		text = text.replace(/ a /g, " ").replace(/i feel /g, "").replace(/whats/g, "what is").replace(/please /g, "").replace(/ please/g, "");
 		if(compare(trigger, reply, text)){
 			var product = compare(trigger, reply, text);
@@ -62,7 +86,7 @@ function output(input){
 	}
 	document.getElementById("chatbot").innerHTML = product;
 	speak(product);
-	document.getElementById("input").value = ""; 
+	document.getElementById("input").value = ""; //clear input value
 }
 function compare(arr, array, string){
 	var item;
@@ -76,5 +100,16 @@ function compare(arr, array, string){
 	}
 	return item;
 }
+function speak(string){
+	var utterance = new SpeechSynthesisUtterance();
+	utterance.voice = speechSynthesis.getVoices().filter(function(voice){return voice.name == "Agnes";})[0];
+	utterance.text = string;
+	utterance.lang = "en-US";
+	utterance.volume = 1; //0-1 interval
+	utterance.rate = 1;
+	utterance.pitch = 2; //0-2 interval
+	speechSynthesis.speak(utterance);
+}
 </script>
 </body>
+</html>
