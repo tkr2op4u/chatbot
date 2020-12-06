@@ -14,13 +14,13 @@ span {
 }
 #main { 
 	top: 10%; right: 250px; width: 500px; 
-	border: 0px solid #421; padding: 40px; 
+	border: 0px solid black; padding: 40px; 
 }
 #main div { 
 	margin: 10px; 
 } 
 #input { 
-	border: 0; background: white; padding: 5px; border: 1px solid #421; 
+	border: 0; background: white; padding: 5px; border: 1px solid black; 
 }
 </style>
 </head>
@@ -39,7 +39,7 @@ var reply = [
 	["Hello, how may I help you?"], 
 	["Pleasure helping you!"]
 ];
-var alt = ["Please enter something valid..."];
+var nt = ["Please enter something valid..."];
 document.querySelector("#input").addEventListener("keypress", function(e){
 	var key = e.which || e.keyCode;
 	if(key === 13){
@@ -53,11 +53,11 @@ function op(input){
 	try{
 		var product = input + "=" + eval(input);
 	} catch(e){
-		var text = (input.toLowerCase()).replace(/[^\w\s\d]/gi, "");
+		var text = input.toLowerCase();
 		if(compare(trigger, reply, text)){
 			var product = compare(trigger, reply, text);
 		} else {
-			var product = alt[Math.floor(Math.random()*alt.length)];
+			var product = nt[Math.floor(Math.random()*nt.length)];
 		}
 	}
 	document.getElementById("bot").innerHTML = product;
