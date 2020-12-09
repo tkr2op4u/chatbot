@@ -27,17 +27,17 @@ span {
 <body>
 <div id="main">
 	<div>user: <span id="user"></span></div>
-	<div>bot: <span id="bot"></span></div>
+	<div>griffles: <span id="griffles"></span></div>
 	<div><input id="input" type="text" placeholder="type here..." autocomplete="off"/></div>
 </div>
 <script type="text/javascript">
-var trigger = [
-	["hi","hey","hello"], 
-	["thanks"]
+var jorf = [
+	["joke"], 
+	["fact"]
 ];
 var reply = [
-	["Hello, how may I help you?"], 
-	["Pleasure helping you!"]
+	["joke1", "joke2", "joke3"], 
+	["fact1", "fact2", "fact3"]
 ];
 var nt = ["Please enter something valid..."];
 document.querySelector("#input").addEventListener("keypress", function(e){
@@ -54,13 +54,13 @@ function op(input){
 		var product = input + "=" + eval(input);
 	} catch(e){
 		var text = input.toLowerCase();
-		if(comp(trigger, reply, text)){
-			var product = comp(trigger, reply, text);
+		if(comp(jorf, reply, text)){
+			var product = comp(jorf, reply, text);
 		} else {
 			var product = nt[Math.floor(Math.random()*nt.length)];
 		}
 	}
-	document.getElementById("bot").innerHTML = product;
+	document.getElementById("griffles").innerHTML = product;
 	speak(product);
 	document.getElementById("input").value = "";
 }
@@ -83,7 +83,7 @@ function speak(string){
 	utterance.lang = "en-US";
 	utterance.volume = 1;
 	utterance.rate = 1;
-	utterance.pitch = 2;
+	utterance.pitch = 1;
 	speechSynthesis.speak(utterance);
 }
 </script>
