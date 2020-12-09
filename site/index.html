@@ -77,14 +77,14 @@ function comp(arr, array, string){
 	return item;
 }
 function speak(string){
-	var utterance = new SpeechSynthesisUtterance();
-	utterance.voice = speechSynthesis.getVoices().filter(function(voice){return voice.name == "John";})[0];
-	utterance.text = string;
-	utterance.lang = "en-US";
-	utterance.volume = 1;
-	utterance.rate = 1;
-	utterance.pitch = 1;
-	speechSynthesis.speak(utterance);
+	var speech = new SpeechSynthesisUtterance();
+	speech.voice = speechSynthesis.getVoices().filter(function(voice){return voice.name == "John";})[0];
+	speech.text = string;
+	speech.lang = "en-US";
+	speech.volume = 1;
+	speech.rate = 1;
+	speech.pitch = 1;
+	speechSynthesis.speak(speech);
 }
 </script>
 </body>
